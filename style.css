@@ -1,0 +1,37 @@
+body {
+  cursor: crosshair;
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#tabela {
+  background: #000;
+  color: #fff;
+  left: 10px;
+  padding: 10px 20px;
+  position: absolute;
+  top: 10px;
+  min-width: 150px;
+  z-index: 1;
+}
+
+#igraj-opet {
+  background: #000;
+  color: #fff;
+  left: 50%;
+  min-height: 150px;
+  min-width: 300px;
+  padding: 10px 20px;
+  position: absolute;
+  text-align: center;
+  top: 30%;
+  transform: translate(-50%, 0);
+  user-select: none;
+  z-index: 1;
+}

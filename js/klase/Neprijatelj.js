@@ -1,7 +1,9 @@
+/* global Vreme, igrac */
+
 const srcRov = 'slike/rov-prazan.gif'
 const srcStoji = 'slike/nemac-rov.gif'
 const srcPuca = 'slike/nemac-rov-puca.gif'
-const PROCENAT_POJAVLJIVANJA = 0.003
+const procenatPojavljivanja = 0.0009 // ubrzavati vremenom
 
 class Neprijatelj {
   constructor(x, y) {
@@ -10,11 +12,11 @@ class Neprijatelj {
     this.z = 1
     this.element = new Image()
     this.element.src = srcRov
-    this.ziv = true
     this.stoji = false
     this.duzinaStajanja = 0
-    this.pripremaDoPucanja = 100 * Math.random()
-    this.dodajKlik()
+    this.pripremaDoPucanja = 50 + 100 * Math.random()
+    this.vreme = new Vreme()
+    document.addEventListener('click', this.proveriPogodak.bind(this))
   }
 
   get sirina() {
@@ -26,20 +28,25 @@ class Neprijatelj {
   }
 
   kolizija(mishX, mishY) {
+    const ofsetX = 20 / this.z
+    const ofsetY = 50 / this.z
     const {x, y, sirina, visina} = this
-    return (mishX >= x && mishX <= x + sirina) && (mishY >= y && mishY <= y + visina)
+    return (
+      (mishX >= x + ofsetX && mishX <= x + sirina - ofsetX) &&
+      (mishY >= y && mishY <= y + visina - ofsetY)
+    )
   }
 
-  dodajKlik() {
-    document.addEventListener('click', e => {
-      if(this.kolizija(e.clientX, e.clientY))
-        this.padni()
-    })
+  proveriPogodak(e) {
+    if(!this.kolizija(e.clientX, e.clientY)) return
+    igrac.poeni++
+    this.padni()
   }
 
   padni() {
     this.element.src = srcRov
-    this.ziv = false
+    this.stoji = false
+    this.duzinaStajanja = 0
   }
 
   ustani() {
@@ -48,15 +55,15 @@ class Neprijatelj {
   }
 
   povremenoUstani() {
-    if (!this.stoji && Math.random() < PROCENAT_POJAVLJIVANJA) this.ustani()
+    if (!this.stoji && Math.random() < procenatPojavljivanja) this.ustani()
   }
 
   pucaj() {
     this.element.src = srcPuca
+    igrac.osteti(0.01)
   }
 
   update() {
-    if (!this.ziv) return
     this.povremenoUstani()
     if (this.stoji) this.duzinaStajanja++
     if (this.duzinaStajanja > this.pripremaDoPucanja) this.pucaj()
