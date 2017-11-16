@@ -1,17 +1,7 @@
-/* global Neprijatelj, Renderer, Pozadina, ucitaj, igrac */
+/* global Fabrika, Renderer, Pozadina, ucitaj, igrac */
 
+let renderer, pozadina, neprijatelji
 const igrajOpet = document.getElementById('igraj-opet')
-const shirina = window.innerWidth
-const visina = window.innerHeight
-const neprijatelji = []
-
-const vojnikaDaljih = 20
-const daljiOfset = 2
-const vojnikaBlizih = 16
-const bliziOfset = 3
-
-const renderer = new Renderer()
-const pozadina = new Pozadina(renderer.element)
 
 const slike = [
   'slike/rov-prazan.gif',
@@ -33,26 +23,17 @@ function mainLoop() {
   igrajOpet.style.display = igrac.ziv ? 'none' : 'block'
 }
 
-function praviNeprijatelje() {
-  neprijatelji.length = 0
-  for (let i = daljiOfset; i < vojnikaDaljih - daljiOfset; i++) {
-    const rand = Math.random() * 100 - 50
-    const neprijatelj = new Neprijatelj(i * shirina / vojnikaDaljih + rand, visina / 6)
-    neprijatelj.z = 1.5
-    neprijatelji.push(neprijatelj)
-  }
-
-  for (let i = bliziOfset; i < vojnikaBlizih - bliziOfset; i++) {
-    const rand = Math.random() * 100 - 50
-    neprijatelji.push(new Neprijatelj(i * shirina / vojnikaBlizih + rand, visina / 3))
-  }
-}
-
 function init() {
+  const shirina = document.body.clientWidth || 800
+  const visina = window.innerHeight || 600
+  renderer = new Renderer(shirina, visina)
+  pozadina = new Pozadina(shirina, visina)
   igrac.init()
-  praviNeprijatelje()
+  neprijatelji = new Fabrika(shirina, visina).praviNeprijatelje()
   mainLoop()
 }
+
+/* EVENTS */
 
 ucitaj(slike, init)
 

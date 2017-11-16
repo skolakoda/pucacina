@@ -1,10 +1,10 @@
 class Pozadina {
-  constructor(canvas) {
+  constructor(sirina, visina) {
     this.element = new Image()
     this.element.src = 'slike/pozadine/suva-trava.jpg'
     this.x = 0
     this.y = 0
-    this.sirina = canvas.width
-    this.visina = canvas.height
+    this.sirina = sirina
+    this.visina = visina
   }
 }
