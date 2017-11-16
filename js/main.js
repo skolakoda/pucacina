@@ -1,6 +1,6 @@
-/* global Fabrika, Renderer, Pozadina, ucitaj, igrac */
+/* global Fabrika, Renderer, Pozadina, ucitaj, Igrac */
 
-let renderer, pozadina, neprijatelji
+let renderer, pozadina, neprijatelji, igrac
 const igrajOpet = document.getElementById('igraj-opet')
 
 const slike = [
@@ -15,7 +15,7 @@ const slike = [
 function mainLoop() {
   renderer.render(pozadina)
   neprijatelji.map(n => {
-    n.update()
+    n.update(igrac)
     renderer.render(n)
   })
   igrac.render()
@@ -28,7 +28,7 @@ function init() {
   const visina = window.innerHeight || 600
   renderer = new Renderer(shirina, visina)
   pozadina = new Pozadina(shirina, visina)
-  igrac.init()
+  igrac = new Igrac()
   neprijatelji = new Fabrika(shirina, visina).praviNeprijatelje()
   mainLoop()
 }
@@ -38,3 +38,7 @@ function init() {
 ucitaj(slike, init)
 
 igrajOpet.addEventListener('click', init)
+
+document.addEventListener('click', e =>
+  neprijatelji.map(n => igrac.nagradi(n.proveriPogodak(e)))
+)

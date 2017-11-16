@@ -1,4 +1,4 @@
-/* global Vreme, igrac */
+/* global Vreme */
 
 const srcRov = 'slike/rov-prazan.gif'
 const srcStoji = 'slike/nemac-rov.gif'
@@ -16,7 +16,6 @@ class Neprijatelj {
     this.duzinaStajanja = 0
     this.pripremaDoPucanja = 50 + 100 * Math.random()
     this.vreme = new Vreme()
-    document.addEventListener('click', this.proveriPogodak.bind(this))
   }
 
   get sirina() {
@@ -37,10 +36,13 @@ class Neprijatelj {
     )
   }
 
+  jelPogodjen(e) {
+    return this.kolizija(e.clientX, e.clientY)
+  }
+
   proveriPogodak(e) {
-    if(!this.kolizija(e.clientX, e.clientY)) return
-    igrac.poeni++
-    this.padni()
+    if (this.jelPogodjen(e)) this.padni()
+    return this.jelPogodjen(e)
   }
 
   padni() {
@@ -58,14 +60,14 @@ class Neprijatelj {
     if (!this.stoji && Math.random() < procenatPojavljivanja) this.ustani()
   }
 
-  pucaj() {
+  pucaj(junak) {
     this.element.src = srcPuca
-    igrac.osteti(0.01)
+    junak.steti(0.01)
   }
 
-  update() {
+  update(junak) {
     this.povremenoUstani()
     if (this.stoji) this.duzinaStajanja++
-    if (this.duzinaStajanja > this.pripremaDoPucanja) this.pucaj()
+    if (this.duzinaStajanja > this.pripremaDoPucanja) this.pucaj(junak)
   }
 }
