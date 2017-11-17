@@ -24,6 +24,7 @@ canvas {
 #igraj-opet {
   background: #000;
   color: #fff;
+  display: none;
   left: 50%;
   min-height: 150px;
   min-width: 300px;
