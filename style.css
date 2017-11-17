@@ -1,5 +1,6 @@
 body {
   cursor: crosshair;
+  cursor: url(slike/igrac/nisan.png) 50 50, crosshair;
   margin: 0;
   padding: 0;
 }
