@@ -4,10 +4,10 @@ let renderer, pozadina, fabrika, neprijatelji, rovovi, igrac
 const igrajOpet = document.getElementById('igraj-opet')
 
 const slike = [
-  'slike/rov-prazan.gif',
+  'slike/rov.gif',
   'slike/nemac-rov.gif',
   'slike/nemac-rov-puca.gif',
-  'slike/pozadine/suva-trava.jpg'
+  'slike/suva-trava.jpg'
 ]
 
 /* FUNKCIJE */

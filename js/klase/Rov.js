@@ -4,7 +4,7 @@ class Rov {
     this.y = y
     this.z = 1
     this.element = new Image()
-    this.element.src = 'slike/rov-prazan.gif'
+    this.element.src = 'slike/rov.gif'
     this.shouldRender = true
   }
 
