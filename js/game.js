@@ -42,6 +42,7 @@ ucitaj(slike, init)
 
 igrajOpet.addEventListener('click', init)
 
-document.addEventListener('click', e =>
+document.addEventListener('click', e => {
+  igrac.pucaj()
   neprijatelji.map(n => igrac.nagradi(n.proveriPogodak(e)))
-)
+})

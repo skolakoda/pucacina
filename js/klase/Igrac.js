@@ -2,13 +2,15 @@ const tabela = document.getElementById('tabela')
 
 class Igrac {
   constructor() {
-    this.init()
-  }
-
-  init() {
     this.ziv = true
     this.poeni = 0
     this.energija = 100
+    this.pucanj = new Audio('zvuci/pucanj.wav')
+  }
+
+  pucaj() {
+    if (this.pucanj.currentTime !== 0) this.pucanj.currentTime = 0
+    this.pucanj.play()
   }
 
   steti(x) {
