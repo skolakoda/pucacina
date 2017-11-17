@@ -8,7 +8,7 @@ const slikaStoji = 'slike/nemac-rov.gif'
 const slikaPuca = 'slike/nemac-rov-puca.gif'
 let ucestalostUstajanja = 0.0009 // ubrzava vremenom
 
-class Neprijatelj { // eslint-disable-line no-unused-vars
+class Neprijatelj {
   constructor(x, y, z = 1) {
     this.x = x
     this.y = y
@@ -17,6 +17,7 @@ class Neprijatelj { // eslint-disable-line no-unused-vars
     this.pripremaDoPucanja = 50 + 100 * Math.random()
     this.vreme = new Vreme()
     this.lezi()
+    this.pucanj = new Audio('zvuci/rafal.mp3')
   }
 
   get sirina() {
@@ -63,8 +64,9 @@ class Neprijatelj { // eslint-disable-line no-unused-vars
   pucaj(junak) {
     this.stanje = PUCA
     this.element.src = slikaPuca
-    junak.steti(0.01)
     this.shouldRender = true
+    junak.steti(0.01)
+    if (this.pucanj.currentTime === 0) this.pucanj.play()
   }
 
   spremanDaUstane() {

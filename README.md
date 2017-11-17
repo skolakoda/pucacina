@@ -1,3 +1,5 @@
-# pucacina
+# Pucačina 2D
 
-![](screen.png)
+Prosta 2D pucačina programirana od nule.
+
+![pucačina](screen.png)
