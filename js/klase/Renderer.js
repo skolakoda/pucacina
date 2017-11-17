@@ -10,6 +10,7 @@ class Renderer {
   }
 
   render(predmet) {
+    if (!predmet.shouldRender) return
     const r = Math.round
     this.podloga.drawImage(predmet.element, r(predmet.x), r(predmet.y), r(predmet.sirina), r(predmet.visina))
   }

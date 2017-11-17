@@ -6,5 +6,6 @@ class Pozadina {
     this.y = 0
     this.sirina = sirina
     this.visina = visina
+    this.shouldRender = true
   }
 }

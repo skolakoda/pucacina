@@ -1,21 +1,22 @@
 /* global Vreme */
 
-const srcRov = 'slike/rov-prazan.gif'
-const srcStoji = 'slike/nemac-rov.gif'
-const srcPuca = 'slike/nemac-rov-puca.gif'
-const procenatPojavljivanja = 0.0009 // ubrzavati vremenom
+const LEZI = 1
+const STOJI = 2
+const PUCA = 3
 
-class Neprijatelj {
-  constructor(x, y) {
+const slikaStoji = 'slike/nemac-rov.gif'
+const slikaPuca = 'slike/nemac-rov-puca.gif'
+const ucestalostUstajanja = 0.0009 // ubrzavati vremenom
+
+class Neprijatelj { // eslint-disable-line no-unused-vars
+  constructor(x, y, z = 1) {
     this.x = x
     this.y = y
-    this.z = 1
+    this.z = z
     this.element = new Image()
-    this.element.src = srcRov
-    this.stoji = false
-    this.duzinaStajanja = 0
     this.pripremaDoPucanja = 50 + 100 * Math.random()
     this.vreme = new Vreme()
+    this.lezi()
   }
 
   get sirina() {
@@ -41,33 +42,41 @@ class Neprijatelj {
   }
 
   proveriPogodak(e) {
-    if (this.jelPogodjen(e)) this.padni()
+    if (this.stanje == LEZI) return
+    if (this.jelPogodjen(e)) this.lezi()
     return this.jelPogodjen(e)
   }
 
-  padni() {
-    this.element.src = srcRov
-    this.stoji = false
+  lezi() {
+    this.stanje = LEZI
     this.duzinaStajanja = 0
+    this.shouldRender = false
   }
 
-  ustani() {
-    this.element.src = srcStoji
-    this.stoji = true
-  }
-
-  povremenoUstani() {
-    if (!this.stoji && Math.random() < procenatPojavljivanja) this.ustani()
+  ustaj() {
+    this.stanje = STOJI
+    this.element.src = slikaStoji
+    this.shouldRender = true
   }
 
   pucaj(junak) {
-    this.element.src = srcPuca
+    this.stanje = PUCA
+    this.element.src = slikaPuca
     junak.steti(0.01)
+    this.shouldRender = true
+  }
+
+  spremanDaUstane() {
+    return (this.stanje == LEZI && Math.random() < ucestalostUstajanja)
+  }
+
+  spremanDaPuca() {
+    return this.duzinaStajanja > this.pripremaDoPucanja
   }
 
   update(junak) {
-    this.povremenoUstani()
-    if (this.stoji) this.duzinaStajanja++
-    if (this.duzinaStajanja > this.pripremaDoPucanja) this.pucaj(junak)
+    if (this.spremanDaUstane()) this.ustaj()
+    if (this.stanje == STOJI) this.duzinaStajanja++
+    if (this.spremanDaPuca()) this.pucaj(junak)
   }
 }

@@ -1,6 +1,6 @@
-/* global Fabrika, Renderer, Pozadina, ucitaj, Igrac */
+/* global Rov, Neprijatelj, Fabrika, Renderer, Pozadina, ucitaj, Igrac */
 
-let renderer, pozadina, neprijatelji, igrac
+let renderer, pozadina, fabrika, neprijatelji, rovovi, igrac
 const igrajOpet = document.getElementById('igraj-opet')
 
 const slike = [
@@ -18,6 +18,7 @@ function mainLoop() {
     n.update(igrac)
     renderer.render(n)
   })
+  rovovi.map(r => renderer.render(r))
   igrac.render()
   if (igrac.ziv) window.requestAnimationFrame(mainLoop)
   igrajOpet.style.display = igrac.ziv ? 'none' : 'block'
@@ -29,7 +30,9 @@ function init() {
   renderer = new Renderer(shirina, visina)
   pozadina = new Pozadina(shirina, visina)
   igrac = new Igrac()
-  neprijatelji = new Fabrika(shirina, visina).praviNeprijatelje()
+  fabrika = new Fabrika(shirina, visina)
+  rovovi = fabrika.pravi(Rov)
+  neprijatelji = fabrika.mapiraj(Neprijatelj, rovovi)
   mainLoop()
 }
 
