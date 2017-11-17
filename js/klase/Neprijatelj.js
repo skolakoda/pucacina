@@ -6,7 +6,7 @@ const PUCA = 3
 
 const slikaStoji = 'slike/nemac-rov.gif'
 const slikaPuca = 'slike/nemac-rov-puca.gif'
-const ucestalostUstajanja = 0.0009 // ubrzavati vremenom
+let ucestalostUstajanja = 0.0009 // ubrzava vremenom
 
 class Neprijatelj { // eslint-disable-line no-unused-vars
   constructor(x, y, z = 1) {
@@ -57,6 +57,7 @@ class Neprijatelj { // eslint-disable-line no-unused-vars
     this.stanje = STOJI
     this.element.src = slikaStoji
     this.shouldRender = true
+    ucestalostUstajanja += 0.000003
   }
 
   pucaj(junak) {
