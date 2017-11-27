@@ -7,6 +7,7 @@ const PUCA = 3
 const slikaStoji = 'slike/nemac-rov.gif'
 const slikaPuca = 'slike/nemac-rov-puca.gif'
 let ucestalostUstajanja = 0.0009 // ubrzava vremenom
+const ubrzavanje = 0.000005
 
 class Neprijatelj {
   constructor(x, y, z = 1) {
@@ -58,7 +59,7 @@ class Neprijatelj {
     this.stanje = STOJI
     this.element.src = slikaStoji
     this.shouldRender = true
-    ucestalostUstajanja += 0.000003
+    ucestalostUstajanja += ubrzavanje
   }
 
   pucaj(junak) {
